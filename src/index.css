@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App{
+    font-family: 'NanumSquareRound';
+    padding: 0 50px;
+}
+
+button{
+    outline: none;
+    font-family: 'NanumSquareRound';
+}
+
+.em{
+    height: 140px;
+    text-align: center;
+}

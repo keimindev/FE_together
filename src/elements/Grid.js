@@ -11,6 +11,7 @@ const Grid = (props) => {
         bg: bg,
         center: center,
     }
+
     return (
         <GridBox {...styles} onClick={_onClick}>
           {children}
@@ -20,7 +21,7 @@ const Grid = (props) => {
 
 
 Grid.defaultProps = {
-    childrent: null,
+   childrent: null,
    is_flex: false,
    width: "100%",
    padding: false,

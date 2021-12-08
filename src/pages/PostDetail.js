@@ -1,4 +1,9 @@
-import React from 'react'
+import React, {useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { history} from '../redux/configStore'
+import { actionsCreators as postActions } from '../redux/modules/post'
+import {axiosInstance} from "../config";
+
 import CommentList from '../components/CommentList'
 
 import styled from 'styled-components'
@@ -6,29 +11,64 @@ import Grid from '../elements/Grid'
 import Button from '../elements/Button'
 
 
-const PostDetail = () => {
+const PostDetail = (props) => {
+    const dispatch = useDispatch()
+    const id = props.match.params.id;
+    const [is_login, setIs_login] = useState(true)
+    const [join, setJoin] = useState(false)
+    // const [info, setInfo] = useState({})
+
+    const _info = useSelector(state => state.post.list)
+    const idx = _info.findIndex((el) => el.postId === id)
+    const info=_info[idx]
+    useEffect(() =>{
+        dispatch(postActions.get_Post(id))
+        // axiosInstance.get(`/api/post/${id}`, )
+        // .then((res) =>{
+        //     console.log(res.data)
+        //     setInfo(res.data)
+        // })
+        // .catch((err)=> console.log(err))
+    },[])
+
+
+    const delBtn = () =>{
+        const ok = window.confirm("게시물을 지우시겠습니까?");
+        if(ok) dispatch(postActions.delPost(id))
+        history.push('/')
+    }
+
     return (
         <>
         <DetailBox>
         <Grid>
             <Title>
-                <span>#React.js</span>
-                <span>타이틀자리입니다</span>
+                <span>#{info.subject}</span>
+                <span>{info.title}</span>
             </Title>
             <InnerBox>
+                <Write>
+                    <span>작성자</span>
+                    <span>{info.userName}</span>
+                </Write>
+                <ContentBox>
+                    {info.content}
+                </ContentBox>
                 <ContentInfo>
                     <span>모집 마감일</span>
-                    <span>2021-12-19</span>
+                    <span>{info.deadline_date}</span>
                     <span>모집 인원</span>
-                    <span>1 / 5</span>
+                    <span>{info.currentState} / {info.state}</span>
+
                 </ContentInfo>
-                <ContentBox>
-                    컨텐츠 자리입니다
-                </ContentBox>
+                {is_login ? (
                 <Btn>
-                    <Button width="80px;" margin="0 10px;">수정</Button>
-                    <Button width="80px;">삭제</Button>
+                    <Button width="80px;" margin="0 10px;" _onClick={() => history.push(`/write/2`)}>수정</Button>
+                    <Button width="80px;" _onClick={() => delBtn()}>삭제</Button>
                 </Btn>
+                ) : (
+                <Btn><Button width="160px;" margin="0 10px;" _onClick={() => setJoin(true)}>스터디 참여하기 👍🏻</Button></Btn>
+                )}
             </InnerBox>
         </Grid>
         <CommentList/>
@@ -41,6 +81,7 @@ const DetailBox = styled.div`
 max-width: 980px;
 min-width: 400px;
 margin: 0 auto;
+padding: 0 20px;
 `;
 
 const Title = styled.p`
@@ -59,7 +100,7 @@ span:nth-child(1){
     font-weight: normal;
     margin-right: 20px;
     padding: 9px 15px;
-    background-color: #31a552;;
+    background-color:  #31ac87;
     border-radius: 20px;
     color: #fff;
 }
@@ -68,6 +109,11 @@ span:nth-child(1){
 span:nth-child(2){
     padding: 8px 0px;
 }
+`;
+
+
+const Write = styled.div`
+float:right;
 `;
 
 const InnerBox = styled.div`
@@ -84,7 +130,7 @@ span:nth-child(3){
     font-weight: normal;
     padding: 9px 15px;
     margin-right: 10px;
-    background-color: #31a552;;
+    background-color:  #31ac87;
     border-radius: 20px;
     color: #fff;
 }
@@ -96,8 +142,8 @@ span:nth-child(4){
 `;
 
 const ContentInfo = styled.div`
-width: 380px;
-float: right;
+width: 400px;
+margin-bottom: 10px;
 `;
 
 const Btn = styled.div`
@@ -106,6 +152,16 @@ width: 200px;
 position:absolute;
 right: 10px;
 bottom: 20px;
+
+button{
+    &:hover{
+    transition: all 0.5s;
+    background-color: #00c472;
+    background-color: #007a59; 
+    color: #fff;
+}
+}
+
 `;
 
 

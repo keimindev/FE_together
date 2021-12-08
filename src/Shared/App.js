@@ -11,7 +11,6 @@ import Header from "./Header";
 function App() {
   return (
     <ConnectedRouter history={history}>
-      <div className="App">
         <Header/>
         <Switch>
         <Route path="/" exact component={PostList} />
@@ -20,7 +19,6 @@ function App() {
         <Route path="/detail/:id" exact component={PostDetail} />
         <Route path="/page/:id" exact component={Mypage} />
         </Switch>
-      </div>
     </ConnectedRouter>
   );
 }

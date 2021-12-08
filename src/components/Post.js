@@ -16,6 +16,7 @@ function Post(props) {
        dispatch(postActions.set_List())
     }, [])
 
+    console.log(post_list)
     return (
         <>
         {post_list.map((p, idx) => {
@@ -111,13 +112,16 @@ const InnerBox=styled.div`
     width:30%;
     height: 200px;
     max-height: 200px;
-    background-color:${(props) => props.gap === 0 ? "#222;" : "#00c472;" };
+    /* background-color: #30aa86;     */
+    background-color: #007a59; 
     padding:25px 10px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
 
     &:hover{
-        background-color: #31a552;
+        /* background-color: #007a59;  */
+        background-color: #30aa86;
+   
     }
 `
 

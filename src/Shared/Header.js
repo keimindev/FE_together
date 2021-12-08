@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
 import Button from '../elements/Button'
@@ -15,10 +16,12 @@ const Header = () => {
             <HeaderForm>
                 <InnerBox>            
                     <Grid is_flex>
-                        <Text>Together</Text>
+                        <Link to="/">
+                        <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
+                        </Link>
                         <Grid is_flex width="230px;">
-                            <Button margin="0 10px;" bg="#00c472;" color="#ffffff;">mypage</Button>
-                            <Button bg="#31a552;" color="#ffffff;">Logout</Button>
+                            <Button margin="0 10px;" bg="#6adeb7;">mypage</Button>
+                            <Button bg="#007a59;" color="#ffffff;">Logout</Button>
                         </Grid>
                 </Grid>
                 </InnerBox>
@@ -31,10 +34,12 @@ const Header = () => {
         <HeaderForm>
             <InnerBox>            
                 <Grid is_flex>
-                    <Text>Together</Text>
+                    <Link to="/">
+                    <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
+                    </Link>
                     <Grid is_flex width="230px;">
-                        <Button margin="0 10px;" bg="#00c472;" color="#ffffff;">Login</Button>
-                        <Button bg="#31a552;" color="#ffffff;">Sign up</Button>
+                        <Button margin="0 10px;" bg="#6adeb7;" >Login</Button>
+                        <Button bg="#007a59;" color="#ffffff;">Sign up</Button>
                     </Grid>
             </Grid>
             </InnerBox>
@@ -45,8 +50,9 @@ const Header = () => {
 
 
 const HeaderForm = styled.div`
-/* background-color: #38ce91; */
-padding: 20px 0;
+background-color: #31ac87;
+padding: 0px 20px;
+margin-bottom: 80px;
 height: 150px;
 color: #ffffff;
 `;
@@ -54,8 +60,16 @@ color: #ffffff;
 const InnerBox = styled.div`
 max-width: 980px;
 min-width: 400px;
-
 margin: 0 auto;
+`;
+ 
+const Logo = styled.div`
+width: 200px;
+
+
+img{
+    width: 100%;
+}
 `;
 
 

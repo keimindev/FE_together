@@ -11,9 +11,8 @@
     box-sizing: border-box;
 }
 
-.App{
+body{
     font-family: 'NanumSquareRound';
-    padding: 0 50px;
 }
 
 button{

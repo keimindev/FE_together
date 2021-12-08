@@ -36,7 +36,7 @@ const UserInfo = (props) => {
     
     return (
         <>
-        <Grid is_flex bg="#00c472;"  padding="30px 50px 30px 100px;">
+        <Grid is_flex bg="#007a59;"  padding="30px 50px 30px 100px;">
             <Grid width="200px;" margin="0 80px 0 0;">
                 <img src="https://i.pinimg.com/736x/ea/d0/cf/ead0cfdafd20f0409792f8911cacda76.jpg" alt="profile" />
             </Grid>
@@ -91,8 +91,9 @@ input{
     padding: 0px 5px;
     border: 0;
     background-color: transparent;
-    border-bottom: 2px solid #fff;
+    border-bottom: 2px solid #31ac87;
     outline: 0;
+    color:  #fff;
 }
 
 ul{

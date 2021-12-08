@@ -10,7 +10,7 @@ const Comment = (props) => {
   const {user_name, user_id, post_id, contents, createdAt} = props;
   const [is_userid, setIs_userid] = useState(true)
   const [edit, setEdit] = useState(false)
-  const [content, setContent] = useState(props.contents)
+  const [content, setContent] = useState(props.contents ? props.contents : "")
 
 
   const editCommentStart =() =>{
@@ -32,7 +32,7 @@ const Comment = (props) => {
               <>
             <CommentBox>
                 <input type="text" value={content} onChange={(e) => setContent(e.target.value)}  maxlength='200'/>
-                <Button width="80px;" _onClick={editComment}>수정하기</Button>
+                <Button width="100px;" _onClick={editComment}>수정 완료</Button>
             </CommentBox>
               </>
             ) : (

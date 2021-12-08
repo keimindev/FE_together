@@ -56,11 +56,12 @@ const TextArea = styled.textarea`
     width: 100%;
     height: 400px;
     max-height: 400px;
-    padding: 1em 0.5em;
+    padding: 2em 2em;
     margin: 1em 0;
     box-sizing: border-box;
     border: 1px solid #ddd;
     outline: 0;
     font-family: 'NanumSquareRound';
+    border-radius: 20px;
  `;
 export default Input

@@ -17,15 +17,18 @@ const Mypage = (props) => {
     }, [])
 
     const user = useSelector((state) => state.post.userInfo)
-    console.log(user.myJoin)
-    // let arr = [];
-    // if(user.myJoin.length >=4){
-    //     for(let i=0; i<4; i++){
-    //         arr.push(user.myJoin[i])
-    //     }
-    // }else{
-    //     arr = user.MyJoin
-    // }
+
+    let arr = [];
+    if(user.myJoin.length >=4){
+        for(let i=0; i<4; i++){
+            arr.push(user.myJoin[i])
+        }
+    }else{
+        for(let i=0; i<user.myJoin.length; i++){
+            arr.push(user.myJoin[i])
+        }
+    }
+
 
     return (
         <>
@@ -38,11 +41,11 @@ const Mypage = (props) => {
             <JoinList>
             {user.myJoin.length === 0 ? (
                 <>
-                <p>참여중인 모임이 없습니다</p>
+                 <EmptyBox>참여 중인 모임이 없습니다 🎈 </EmptyBox>
                 </>
-            ) : (
+                ) : (
                 <>
-                {user.myJoin.map((el, i) => {
+                {arr.map((el, i) => {
                 return(
                  <>
                     <ListForm key={i}>
@@ -52,7 +55,7 @@ const Mypage = (props) => {
                         <Text margin="10px 0;">인원 3/{el.state}</Text>
                         <Text margin="10px 0;">마감일 {el.deadline_date}</Text>
                     </ListForm>
-                    </>
+                 </>
                 )})} 
                 </>
             )}
@@ -90,6 +93,7 @@ const MypageForm =styled.div`
 max-width: 980px;
 min-width: 400px;
 margin: 0 auto;
+padding: 0 20px;
 
 hr{
     margin : 40px 0;
@@ -102,12 +106,29 @@ img{
     border-radius: 50%;
 
 }
-`
+`;
+
+
+const EmptyBox = styled.div`
+width: 100%;
+height: 300px;
+line-height: 300px;
+text-align : center;
+margin: 0 auto;
+border-radius: 20px;
+border:1px solid #ddd;
+
+
+`;
 
 const MORE = styled.p`
 width:50px;
-margin: 20px 10px;
+margin: 0px 10px 20px 0;
 float: right;
+cursor: pointer;
+  &:hover{
+      font-weight: 700;
+  }
 `;
 
 
@@ -115,7 +136,7 @@ const JoinList = styled.div`
 width: 100%;
 display: grid;
 grid-template-columns: repeat(4, 1fr);
-grid-gap: 20px;
+grid-gap: 10px;
 `;
 
 const Title = styled.p`
@@ -164,8 +185,6 @@ button{
 
 }
 }
-
-
 `;
 
 

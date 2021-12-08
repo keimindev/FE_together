@@ -97,9 +97,11 @@ const WriteForm = styled.div`
 max-width: 980px;
 min-width: 400px;
 margin: 0 auto;
+padding: 0 20px;
 
 input[type="text"]{
     height: 50px;
+    border-radius: 20px;
 }
 
 select{
@@ -113,6 +115,7 @@ select{
   appearance: none;
   outline: none;
   font-family: 'NanumSquareRound';
+  border-radius: 30px;
 
   option{
       margin: 5px 0 ;
@@ -121,11 +124,12 @@ select{
 
 
 input[type="number"]{
-    width: 50px;
+    width: 60px;
     height: 40px;
-    padding: 5px 5px;
+    padding: 5px 10px;
     border:1px solid #ddd;
     outline: none;
+    border-radius: 30px;
 }
 
 `
@@ -137,7 +141,7 @@ margin-top: 20px;
 &:hover{
     button{
         transition: all 0.5s ease;
-        background-color: #31a552;
+        background-color: #007a59;
         color: #fff;
     }
 }

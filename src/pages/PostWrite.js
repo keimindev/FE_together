@@ -32,12 +32,20 @@ const PostWrite = (props) => {
     const date = moment().format("YYYY-MM-DD")
 
     const addpost =() =>{
+        if( !title || !content || !subject || !deadline || !state ){
+            window.alert("빈 공간을 채워주세요!")
+            return ;
+        }
         dispatch(postActions.add_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}))
         //dispatch(postActions.add_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}))
     }
 
 
     const editpost = () =>{
+        if( !title || !content || !subject || !deadline || !state ){
+            window.alert("빈 공간을 채워주세요!")
+            return ;
+        }
         dispatch(postActions.edit_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}, post_id))
     }
 

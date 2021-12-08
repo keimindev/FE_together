@@ -1,75 +1,79 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {actionsCreators as postActions} from '../redux/modules/post'
-import axios from 'axios'
+import {history} from '../redux/configStore'
+import UserInfo from '../components/UserInfo'
 
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
 import Button from '../elements/Button'
 import styled from 'styled-components'
 
-const Mypage = () => {
+const Mypage = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(postActions.set_Mypage())
+        //dispatch(postActions.set_Mypage())
     }, [])
 
     const user = useSelector((state) => state.post.userInfo)
+    console.log(user.myJoin)
+    // let arr = [];
+    // if(user.myJoin.length >=4){
+    //     for(let i=0; i<4; i++){
+    //         arr.push(user.myJoin[i])
+    //     }
+    // }else{
+    //     arr = user.MyJoin
+    // }
 
     return (
         <>
         <MypageForm>
-        <Grid is_flex bg="#00c472;"  padding="30px 50px 30px 100px;">
-            <Grid width="200px;" margin="0 80px 0 0;">
-                <img src="https://i.pinimg.com/736x/ea/d0/cf/ead0cfdafd20f0409792f8911cacda76.jpg" alt="profile" />
-            </Grid>
-            <UserInfo>
-                <ul>
-                    <li>닉네임</li>
-                    <li>{user.userInfo[0].userName}</li>
-                </ul>
-                <ul>
-                    <li>아이디</li>
-                    <li>{user.userInfo[0].userId}</li>
-                </ul>
-                <ul>
-                    <li>비밀번호</li>
-                    <li>{user.userInfo[0].password}</li>
-                </ul>
-                <Btn><Button width="100px;">수정</Button></Btn>
-            </UserInfo>
-        </Grid>
+        <UserInfo user={user}/>
+        <hr/>
         <Grid margin="30px 0;">
-            <Text margin="20px 0;"><h2>참여리스트</h2></Text>
+            <Text margin="20px 0;" bold size="1.6em;">참여리스트</Text>
+            {user.myJoin.length > 4 ? (<MORE>더 보기</MORE>) : (<></>)}
             <JoinList>
-            {user.myJoin.map((el) => {
+            {user.myJoin.length === 0 ? (
+                <>
+                <p>참여중인 모임이 없습니다</p>
+                </>
+            ) : (
+                <>
+                {user.myJoin.map((el, i) => {
                 return(
                  <>
-                    <ListForm>
+                    <ListForm key={i}>
                         <Text margin="10px 0;">#{el.subject}</Text>
-                        <Text margin="10px 0;"><h3>{el.title}</h3></Text>
+                        <Title>{el.title}</Title>
                         <Text margin="10px 0;">팀 리더 : {el.userName}</Text>
                         <Text margin="10px 0;">인원 3/{el.state}</Text>
                         <Text margin="10px 0;">마감일 {el.deadline_date}</Text>
                     </ListForm>
                     </>
-                )})}
+                )})} 
+                </>
+            )}
             </JoinList>
         </Grid>
         <Grid margin="30px 0;">
-            <Text margin="20px 0;"><h2>내가 쓴 글</h2></Text>
+            <Text margin="20px 0;" bold size="1.6em;">내가 쓴 글</Text>
             {user.myPost.map((el, i) => {
                 return(
                     <>
-                    <MyPostForm>
+                    <MyPostForm key={i}>
                     <Grid is_flex>
                         <h5>{i + 1}</h5>
                         <Text>{el.title}</Text>
-                        <Grid width="220px;" is_flex>
-                            <div>1/{el.state}</div>
-                            <Button width="60px;" margin="0 5px;">수정</Button>
-                            <Button width="60px;">삭제</Button>
+                        <Grid width="330px;" is_flex>
+                            <span>현재 인원</span>
+                            <div>{el.currentState}/{el.state}</div>
+                            <Button width="60px;" margin="0 5px;" _onClick={() => history.push(`/write/${el.postId}`)} >수정</Button>
+                            <Button width="60px;" _onClick={() => {
+                                dispatch(postActions.del_MyPost(el.postId))
+                            }}>삭제</Button>
                         </Grid>
                     </Grid>
                     </MyPostForm>
@@ -87,6 +91,11 @@ max-width: 980px;
 min-width: 400px;
 margin: 0 auto;
 
+hr{
+    margin : 40px 0;
+    border: 1px solid #eee;
+}
+
 img{
     width: 150px;
     height: 150px;
@@ -94,30 +103,10 @@ img{
 
 }
 `
-const UserInfo = styled.div`
-width: 100%;
 
-ul{
-    display: flex;
-    margin: 15px 0;
-
-    li{
-        list-style: none;
-        padding: 10px 5px;
-        color: #fff;
-    }
-
-    li:nth-child(1){
-        width: 80px;
-        margin-right: 10px;
-        border-radius: 10px;
-        background-color: rgba(255,255,255,0.7);
-        text-align: center;
-        color: #222;
-    }
-}
-`;
-const Btn =styled.div`
+const MORE = styled.p`
+width:50px;
+margin: 20px 10px;
 float: right;
 `;
 
@@ -126,7 +115,15 @@ const JoinList = styled.div`
 width: 100%;
 display: grid;
 grid-template-columns: repeat(4, 1fr);
+grid-gap: 20px;
+`;
 
+const Title = styled.p`
+    font-size: 1.3em;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const ListForm = styled.div`

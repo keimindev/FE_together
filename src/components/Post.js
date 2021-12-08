@@ -10,7 +10,6 @@ import Text from '../elements/Text'
 
 function Post(props) {
     const dispatch = useDispatch()
-
     const post_list = useSelector((state) => state.post.list)
 
     useEffect(() => {
@@ -30,9 +29,14 @@ function Post(props) {
                 <PostForm key={idx}>
                 <Grid is_flex>
                     <Grid margin="30px 0 0 0;">
-                    <span className="dday">D-{gap}</span>
+                    {gap === 0 || p.state === p.currentState ? (
+                         <span className="dday endday">#모집마감</span>
+                    ) : (
+                         <span className="dday">D-{gap}</span>
+                    )}
+                   
                     <Text margin="15px 0 15px 0;" size="1.3em;" bold>{p.title}</Text>
-                    <Text>{p.content}</Text>
+                    <Content>{p.content}</Content>
                     </Grid>
                     <InnerBox>
                         <Text margin="10px 0 0 0;" color="#fff;">Team Leader : {p.userName}</Text>
@@ -65,13 +69,21 @@ cursor: pointer;
 span{
     border-radius: 10px;
     background-color: #e8f5ee;
+    /* background-color:#00c472;  */
+    /* color: #fff; */
     padding: 5px 10px;
     margin-right: 5px;
+ 
 }
 
 .dday{
     font-size: 24px;
     font-weight: bold; 
+}
+
+.endday{
+    background-color: #e8f5ee;
+    color: #fff;
 }
 
 .tag{
@@ -86,11 +98,20 @@ span{
 
 `;
 
+const Content = styled.p`
+    width: 97%;
+    padding-top: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+`;
+
 const InnerBox=styled.div`
     width:30%;
     height: 200px;
     max-height: 200px;
-    background-color:#00c472; 
+    background-color:${(props) => props.gap === 0 ? "#222;" : "#00c472;" };
     padding:25px 10px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;

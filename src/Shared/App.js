@@ -7,13 +7,16 @@ import PostDetail from '../pages/PostDetail';
 import Mypage from '../pages/Mypage';
 
 import Header from "./Header";
+import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 
 function App() {
   return (
     <ConnectedRouter history={history}>
-        <Header/>
         <Switch>
         <Route path="/" exact component={PostList} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
         <Route path="/write" exact component={PostWrite} />
         <Route path="/write/:id" exact component={PostWrite} />
         <Route path="/detail/:id" exact component={PostDetail} />

@@ -1,30 +1,46 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router'
-import styled from 'styled-components'
+import React, {useEffect} from 'react'
+import { history } from '../redux/configStore'
+import { useSelector,  useDispatch } from 'react-redux'
+import { actionsCreators as postActions } from '../redux/modules/post'
+import Header from '../Shared/Header'
 import Post from '../components/Post'
 import Button from '../elements/Button'
 import Grid from '../elements/Grid'
 
-const PostList = () => {
-  const history = useHistory()
+import styled from 'styled-components'
+
+
+const PostList = (props) => {
+  const dispatch = useDispatch()
   const moveToPage = () =>{
      history.push('/write')
   }
 
+  const {history} = props;
+  
+  useEffect(() => {
+    dispatch(postActions.set_List())
+ }, [])
+
+  const post_list = useSelector((state) => state.post.list)
+
+  console.log(post_list)
+
+
+
     return (
         <>
+        <Header/>
         <List>
           <Grid is_flex margin="0 0 40px 0;">
               <Button width="100px;" _onClick={moveToPage}>모집하기</Button>
-              {/* <Grid is_flex width="420px;">
-              <Button width="100px;">ALL</Button>
-              <Button width="100px;">#React.js</Button>
-              <Button width="100px;">#Node.js</Button>
-              <Button width="100px;">#Spring</Button>
-              </Grid> */}
           </Grid>
-          <Post/>
+          
+          {post_list.map((p,i) => {
+            <Grid key={i} _onClick={() => history.push(`/detail/${p.postId}`)}>
+              <Post key={i} {...p}/>
+            </Grid>
+          })}
         </List>
         </>
     )

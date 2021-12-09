@@ -8,6 +8,7 @@ import Button from '../elements/Button'
 import Input from '../elements/Input'
 import Text from '../elements/Text'
 import styled from 'styled-components'
+import Header from '../Shared/Header'
 
 const PostWrite = (props) => {
     const dispatch = useDispatch()
@@ -51,6 +52,7 @@ const PostWrite = (props) => {
 
     return (
         <>
+        <Header/>
         <WriteForm>
             <Input type="text" 
             placeholder="타이틀을 적어주세요" 

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
+import { history } from '../redux/configStore'
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
 import Button from '../elements/Button'
@@ -8,7 +9,7 @@ import styled from 'styled-components'
 
 
 const Header = () => {
-    const [is_login, setIs_login] = useState(true)
+    const [is_login, setIs_login] = useState(false)
 
     if(is_login){
         return(
@@ -38,8 +39,8 @@ const Header = () => {
                     <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
                     </Link>
                     <Grid is_flex width="230px;">
-                        <Button margin="0 10px;" bg="#6adeb7;" >Login</Button>
-                        <Button bg="#007a59;" color="#ffffff;">Sign up</Button>
+                        <Button margin="0 10px;" bg="#6adeb7;" _onClick={() => history.push('/login')}>Login</Button>
+                        <Button bg="#007a59;" color="#ffffff;" _onClick={() => history.push('/signup')}>Sign up</Button>
                     </Grid>
             </Grid>
             </InnerBox>

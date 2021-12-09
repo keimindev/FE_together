@@ -33,17 +33,20 @@ const UserInfo = (props) => {
         setEdit(false)
     }
     
+
+    const profile = user.userInfo.userName.split('')[0]
     
     return (
         <>
-        <Grid is_flex bg="#007a59;"  padding="30px 50px 30px 100px;">
-            <Grid width="200px;" margin="0 80px 0 0;">
-                <img src="https://i.pinimg.com/736x/ea/d0/cf/ead0cfdafd20f0409792f8911cacda76.jpg" alt="profile" />
+        <Grid is_flex bg="#007a59;"  padding="30px 50px 30px 50px;">
+            <Grid width="200px;" margin="0 20px 0px 20px;">
+                <Profile>{profile}</Profile>
             </Grid>
 
             {edit ? (
                 <>
                 <UserInfoBox>
+                    <Inner>
                     <ul>
                         <li>닉네임</li>
                         <li><input type="text" value={username} onChange={(e) => setUsername(e.target.value)}/></li>
@@ -52,6 +55,8 @@ const UserInfo = (props) => {
                         <li>아이디</li>
                         <li>{user.userInfo.userId}</li>
                     </ul>
+                    </Inner>
+                    <Inner>
                     <ul>
                         <li>비밀번호</li>
                         <li><input type="password" value={pw} onChange={(e) => setPw(e.target.value)}/></li>
@@ -60,21 +65,24 @@ const UserInfo = (props) => {
                         <li>비밀번호 확인</li>
                         <li><input type="password" value={pwCheck} onChange={(e) => setPwCheck(e.target.value)} /></li>
                     </ul>
-                    <Btn><Button width="100px;" _onClick={editinfo}>완료</Button></Btn>
+                    </Inner>
+                    <Btn><Button width="80px;" _onClick={editinfo}>완료</Button></Btn>
                 </UserInfoBox>
                 </>
             ) : (
                 <>
                     <UserInfoBox>
-                    <ul>
-                        <li>닉네임</li>
-                        <li>{user.userInfo.userName}</li>
-                    </ul>
-                    <ul>
-                        <li>아이디</li>
-                        <li>{user.userInfo.userId}</li>
-                    </ul>
-                    <Btn><Button width="100px;" _onClick={()=> setEdit(true)}>수정</Button></Btn>
+                        <Inner>
+                            <ul>
+                                <li>닉네임</li>
+                                <li>{user.userInfo.userName}</li>
+                            </ul>
+                            <ul>
+                                <li>아이디</li>
+                                <li>{user.userInfo.userId}</li>
+                            </ul>
+                    </Inner>
+                    <Btn><Button width="80px;" _onClick={()=> setEdit(true)}>수정</Button></Btn>
                 </UserInfoBox>
                 </>
             ) }
@@ -85,9 +93,12 @@ const UserInfo = (props) => {
 
 const UserInfoBox = styled.div`
 width: 100%;
+display: flex;
+
+position: relative;
 
 input{
-    width: 130px;
+    width: 120px;
     padding: 0px 5px;
     border: 0;
     background-color: transparent;
@@ -117,9 +128,28 @@ ul{
 }
 `;
 
+const Inner = styled.div`
+width: 45%;
+`;
+
+
+const Profile = styled.div`
+width: 100px;
+height: 100px;
+border-radius: 50%;
+background-color: #fff;
+text-align: center;
+line-height: 100px;
+font-size: 50px;
+font-weight: bold;
+`;
+
 
 const Btn =styled.div`
-float: right;
+position: absolute;
+top: 0px;
+right: -15px;
+
 `;
 
 

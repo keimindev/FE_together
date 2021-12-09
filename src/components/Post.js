@@ -1,59 +1,44 @@
-import React, {useState, useEffect} from 'react'
-import { useSelector,  useDispatch } from 'react-redux'
+import React from 'react'
 
-
-import {actionsCreators as postActions} from '../redux/modules/post'
 import styled from 'styled-components'
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
 
 
 function Post(props) {
-    const dispatch = useDispatch()
-    const post_list = useSelector((state) => state.post.list)
+    const setDate = new Date(props.deadline_date)
+    const today = new Date()
+    let distance = setDate.getTime() - today.getTime()
+    let gap = Math.ceil(distance / (1000 * 60 * 60 * 24))
 
-    useEffect(() => {
-       dispatch(postActions.set_List())
-    }, [])
 
-    console.log(post_list)
     return (
         <>
-        {post_list.map((p, idx) => {
-            const setDate = new Date(p.deadline_date)
-            const today = new Date()
-            let distance = setDate.getTime() - today.getTime()
-            let gap = Math.ceil(distance / (1000 * 60 * 60 * 24))
-
-            return(
-                <>
-                <PostForm key={idx}>
-                <Grid is_flex>
-                    <Grid margin="30px 0 0 0;">
-                    {gap === 0 || p.state === p.currentState ? (
-                         <span className="dday endday">#모집마감</span>
-                    ) : (
-                         <span className="dday">D-{gap}</span>
-                    )}
-                   
-                    <Text margin="15px 0 15px 0;" size="1.3em;" bold>{p.title}</Text>
-                    <Content>{p.content}</Content>
-                    </Grid>
-                    <InnerBox>
-                        <Text margin="10px 0 0 0;" color="#fff;">Team Leader : {p.userName}</Text>
-                        <Text margin="10px 0 0 0" color="#fff;">모집인원 : {p.currentState}/{p.state}</Text>
-                        <Text margin="10px 0 0 0" color="#fff;">마감일 : {p.deadline_date}</Text>
-                        <Grid margin="20px 0 0 0 " width="200px;">
-                            <span className="tag">#{p.subject}</span>
-                        </Grid>
-                    </InnerBox>
-                </Grid>  
-                </PostForm>
-                </>
-            )
-        })}
+        <PostForm>
+        <Grid is_flex>
+            <Grid margin="30px 0 0 0;">
+            {gap < 0 || props.state === props.currentState ? (
+                    <span className="dday endday">#모집마감</span>
+            ) : (
+                    <span className="dday">D-{gap}</span>
+            )}
+            
+            <Text margin="15px 0 15px 0;" size="1.3em;" bold>{props.title}</Text>
+            <Content>{props.content}</Content>
+            </Grid>
+            <InnerBox>
+                <Text margin="10px 0 0 0;" color="#fff;">Team Leader : {props.userName}</Text>
+                <Text margin="10px 0 0 0" color="#fff;">모집인원 : {props.currentState}/{props.state}</Text>
+                <Text margin="10px 0 0 0" color="#fff;">마감일 : {props.deadline_date}</Text>
+                <Grid margin="20px 0 0 0 " width="200px;">
+                    <span className="tag">#{props.subject}</span>
+                </Grid>
+            </InnerBox>
+        </Grid>  
+        </PostForm>
         </>
     )
+  
 }
 
 const PostForm = styled.div`

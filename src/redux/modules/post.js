@@ -15,8 +15,8 @@ const setList = createAction(SET_LIST, (postlist) => ({postlist}))
 const addPost = createAction(ADD_POST, (post) => ({post}))
 const editPost = createAction(EDIT_POST, (post, post_Id) => ({post, post_Id}))
 const editInfo = createAction(EDIT_INFO, (info) => ({info}))
-const delPost = createAction(DEL_POST, (post_id) => (post_id))
-const delMyPost = createAction(DEL_MYPOST, (post_id) => (post_id))
+const delPost = createAction(DEL_POST, (post_id) => ({post_id}))
+const delMyPost = createAction(DEL_MYPOST, (post_id) => ({post_id}))
 const setMypage = createAction(SET_MYPAGE, (list) => ({list}))
 
 const initialState = {
@@ -127,12 +127,12 @@ const initialPost = {
 
 const set_List = (postlist) =>{
     return function(dispatch, getState, {history}){
-        // axiosInstance.get('/api/post' , )
-        // .then(function(response){
-        //     dispatch(setList(response.data.posts))
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
+        axiosInstance.get('/api/post' , )
+        .then(function(response){
+            dispatch(setList(response.data.posts))
+        }).catch(function(error){
+            console.log(error)
+        })
     }
 
 }

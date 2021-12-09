@@ -4,6 +4,7 @@ import {actionsCreators as postActions} from '../redux/modules/post'
 import {history} from '../redux/configStore'
 import UserInfo from '../components/UserInfo'
 
+import Header from '../Shared/Header'
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
 import Button from '../elements/Button'
@@ -32,6 +33,7 @@ const Mypage = (props) => {
 
     return (
         <>
+        <Header/>
         <MypageForm>
         <UserInfo user={user}/>
         <hr/>
@@ -74,9 +76,8 @@ const Mypage = (props) => {
                             <span>현재 인원</span>
                             <div>{el.currentState}/{el.state}</div>
                             <Button width="60px;" margin="0 5px;" _onClick={() => history.push(`/write/${el.postId}`)} >수정</Button>
-                            <Button width="60px;" _onClick={() => {
-                                dispatch(postActions.del_MyPost(el.postId))
-                            }}>삭제</Button>
+                            <Button width="60px;" _onClick={() => {                                window.alert('게시물을 삭제하시겠습니까? ')
+                                dispatch(postActions.del_MyPost(el.postId))}}>삭제</Button>
                         </Grid>
                     </Grid>
                     </MyPostForm>

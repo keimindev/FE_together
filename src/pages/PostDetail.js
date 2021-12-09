@@ -9,20 +9,31 @@ import CommentList from '../components/CommentList'
 import styled from 'styled-components'
 import Grid from '../elements/Grid'
 import Button from '../elements/Button'
+import Header from '../Shared/Header';
 
 
 const PostDetail = (props) => {
     const dispatch = useDispatch()
     const id = props.match.params.id;
-    const [is_login, setIs_login] = useState(true)
+    const [is_login, setIs_login] = useState(false)
     const [join, setJoin] = useState(false)
-    // const [info, setInfo] = useState({})
+    //const [info, setInfo] = useState({})
 
     const _info = useSelector(state => state.post.list)
     const idx = _info.findIndex((el) => el.postId === id)
     const info=_info[idx]
+
+    console.log(info)
+
+    //date gap
+    const setDate = new Date(info.deadline_date)
+    const today = new Date()
+    let distance = setDate.getTime() - today.getTime()
+    let gap = Math.ceil(distance / (1000 * 60 * 60 * 24))
+
+
     useEffect(() =>{
-        dispatch(postActions.get_Post(id))
+         dispatch(postActions.get_Post(id))
         // axiosInstance.get(`/api/post/${id}`, )
         // .then((res) =>{
         //     console.log(res.data)
@@ -40,6 +51,7 @@ const PostDetail = (props) => {
 
     return (
         <>
+        <Header/>
         <DetailBox>
         <Grid>
             <Title>
@@ -67,7 +79,20 @@ const PostDetail = (props) => {
                     <Button width="80px;" _onClick={() => delBtn()}>삭제</Button>
                 </Btn>
                 ) : (
-                <Btn><Button width="160px;" margin="0 10px;" _onClick={() => setJoin(true)}>스터디 참여하기 👍🏻</Button></Btn>
+                    <>
+                    { gap < 0 || info.state === info.currentState ? (
+                        <>
+                        <Btn><Button width="160px;" margin="0 10px;" disabled={false}>스터디 모집완료</Button></Btn>
+                        </>
+                    ) : (
+                        <>
+                        {join ? <JoinBtn><Button width="160px;" margin="0 10px;" bg="#007a59;" color="#fff;" _onClick={() => setJoin(false)}>스터디 참여완료 👍🏻</Button></JoinBtn>
+                        :
+                        <JoinBtn><Button width="160px;" margin="0 10px;" _onClick={() => setJoin(true)}>스터디 참여하기</Button></JoinBtn> 
+                        }
+                        </>
+                    ) }
+                  </>
                 )}
             </InnerBox>
         </Grid>
@@ -153,15 +178,14 @@ position:absolute;
 right: 10px;
 bottom: 20px;
 
-button{
-    &:hover{
-    transition: all 0.5s;
-    background-color: #00c472;
-    background-color: #007a59; 
-    color: #fff;
-}
-}
+`;
 
+const JoinBtn = styled.div`
+width: 200px;
+
+position:absolute;
+right: 10px;
+bottom: 20px;
 `;
 
 

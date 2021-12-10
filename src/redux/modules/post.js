@@ -156,16 +156,16 @@ const add_Post = (item) =>{
 
 const edit_Post = (post, post_Id) =>{
     return function(dispatch, getState, {history}){
-        // axiosInstance.put(`/api/modify/${post_Id}`, post ,{
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //     },
-        //     })
-        //         .then((res) =>{
-        //             console.log(res)
-        //             dispatch(editPost(res ,post_Id))
-        //         })
-        //         .catch((err)=> console.log(err))
+        axiosInstance.put(`/api/modify/${post_Id}`, post ,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            })
+                .then((res) =>{
+                    console.log(res)
+                    dispatch(editPost(res ,post_Id))
+                })
+                .catch((err)=> console.log(err))
     }
 }
 

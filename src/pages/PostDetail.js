@@ -25,7 +25,6 @@ const PostDetail = (props) => {
     const token = localStorage.getItem('token')
 
     useEffect(() =>{
-        dispatch(userActions.getUserCheck())
         axiosInstance.get(`/api/post/${id}`, )
         .then((res) =>{
             setInfo(res.data)
@@ -39,8 +38,6 @@ const PostDetail = (props) => {
            },
             })
             .then((res) =>{ 
-                console.log(res)
-                console.log(res.data.status)
                 setJoin(res.data.status)
             })
             .catch((err)=> console.log(err))

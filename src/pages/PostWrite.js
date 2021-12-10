@@ -37,7 +37,6 @@ const PostWrite = (props) => {
 
     },[])
 
-
     console.log(postInfo, postInfo.title)
 
     const [title, setTitle] = useState(postInfo ? postInfo.title : ""); 
@@ -86,8 +85,9 @@ const PostWrite = (props) => {
             <Input type="text" 
             placeholder="타이틀을 적어주세요" 
             label=""
+            _onChange={(e) => setTitle(e.target.value)}
             value={title}
-            _onChange={(e) => setTitle(e.target.value)}/>
+            />
             <Grid is_flex>
                 <Grid is_flex width="210px;"> 
                 <select onChange={e => setSubject(e.target.value)}>

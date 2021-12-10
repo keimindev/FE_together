@@ -27,7 +27,7 @@ function Post(props) {
             <Content>{props.content}</Content>
             </Grid>
             <InnerBox>
-                <Text margin="10px 0 0 0;" color="#fff;">Team Leader : {props.userName}</Text>
+                <Text margin="10px 0 0 0;" color="#fff;">팀 리더 : {props.userName}</Text>
                 <Text margin="10px 0 0 0" color="#fff;">모집인원 : {props.currentState}/{props.state}</Text>
                 <Text margin="10px 0 0 0" color="#fff;">마감일 : {props.deadline_date}</Text>
                 <Grid margin="20px 0 0 0 " width="200px;">

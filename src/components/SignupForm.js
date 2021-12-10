@@ -15,24 +15,27 @@ const SignupForm = ({ submitForm }) => {
 
   //별명입력
   const [user_nickname, setNickname] = useState('');
-
+  const [err_nickname, setErrNickname] = useState('');
   const changeNickname = (e) => {
     setNickname(e.target.value);
   };
   //이메일
   const [user_email, setEmail] = useState('');
+  const [err_email, setErrEmail] = useState('');
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
 
   //비밀번호
   const [user_pwd, setPwd] = useState('');
+  const [err_pwd, setErrPwd] = useState('');
   const changePwd = (e) => {
     setPwd(e.target.value);
   };
 
   //비밀번호 확인
   const [user_pwdcheck, setPwdcheck] = useState('');
+  const [err_pwdcheck, setErrPwdcheck] = useState('');
   const changePwdcheck = (e) => {
     setPwdcheck(e.target.value);
   };
@@ -45,10 +48,27 @@ const SignupForm = ({ submitForm }) => {
       return ;
   }
 
+  if(user_nickname.length > 10){
+    setErrNickname("닉네임은 최대 9자까지 가능합니다");
+    return;
+  }
+
     if(!emailCheck(user_email)){
-        window.alert("이메일 형식이 맞지 않습니다");
+        setErrEmail("이메일 형식이 맞지 않습니다")
         return ;
     }
+
+    if(user_pwd.length < 6){
+      setErrPwd("비밀번호는 최소 6자리 이상이어야합니다");
+      return;
+    }
+
+    if(user_pwd !== user_pwdcheck){
+      setErrPwdcheck("비밀번호가 일치하지 않습니다");
+      return;
+    }
+
+
 
     dispatch(
       actionsCreators.signUpDB(
@@ -73,7 +93,7 @@ const SignupForm = ({ submitForm }) => {
             value={user_nickname}
             onChange={(handleChange, changeNickname)}
           />
-          {errors.nickname && <p>{errors.nickname}</p>}
+          {err_nickname && <p>{err_nickname}</p>}
         </div>
         <div className="form-inputs">
           <label className="form-label">Email</label>
@@ -85,7 +105,7 @@ const SignupForm = ({ submitForm }) => {
             value={user_email}
             onChange={(handleChange, changeEmail)}
           />
-          {errors.email && <p>{errors.email}</p>}
+          {err_email && <p>{err_email}</p>}
         </div>
         <div className="form-inputs">
           <label className="form-label">Password</label>
@@ -97,7 +117,7 @@ const SignupForm = ({ submitForm }) => {
             value={user_pwd}
             onChange={(handleChange, changePwd)}
           />
-          {errors.password && <p>{errors.password}</p>}
+          {err_pwd && <p>{err_pwd}</p>}
         </div>
         <div className="form-inputs">
           <label className="form-label">Confirm Password</label>
@@ -109,7 +129,7 @@ const SignupForm = ({ submitForm }) => {
             value={user_pwdcheck}
             onChange={(handleChange, changePwdcheck)}
           />
-          {errors.password2 && <p>{errors.password2}</p>}
+          {err_pwdcheck && <p>{err_pwdcheck}</p>}
         </div>
         <button onClick={signup} className="form-input-btn" type="button">
           회원가입

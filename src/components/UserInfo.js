@@ -8,11 +8,11 @@ import styled from 'styled-components'
 const UserInfo = (props) => {
     const dispatch = useDispatch()
     const userInfo = useSelector((state) => state.user.user.user)
-    const [username, setUsername] = useState(userInfo.userName)
+    const [username, setUsername] = useState(props.userinfo.userName)
     const [pw, setPw] = useState()
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
-    
+    console.log(props.userinfo)
     //eidt
     const post_id = props.id
     const is_edit = post_id ? true : false
@@ -20,7 +20,7 @@ const UserInfo = (props) => {
     
     useEffect(() =>{
         dispatch(userActions.getUserCheck())
-   },[])
+   },[userInfo])
 
     const editinfo = () => {
         if(!username || !pw || !pwCheck){
@@ -32,13 +32,13 @@ const UserInfo = (props) => {
             window.alert("비밀번호가 일치 하지 않습니다!😊");
             return;
         }
-        dispatch(userActions.modifyUserInfo({ userName: username , password: pw, passwordConfirm: pwCheck}, userInfo.userId))
+        dispatch(userActions.modifyUserInfo({ userName: username , password: pw, passwordConfirm: pwCheck}, props.userinfo.userId))
         setEdit(false)
-        // window.location.reload()
+    
     }
     
 
-    const profile = userInfo.userName.split('')[0]
+    const profile = props.userinfo.userName.split('')[0]
     
     return (
         <>
@@ -57,7 +57,7 @@ const UserInfo = (props) => {
                     </ul>
                     <ul>
                         <li>아이디</li>
-                        <li>{userInfo.userEmail}</li>
+                        <li>{props.userinfo.userEmail}</li>
                     </ul>
                     </Inner>
                     <Inner>
@@ -79,11 +79,11 @@ const UserInfo = (props) => {
                         <Inner>
                             <ul>
                                 <li>닉네임</li>
-                                <li>{userInfo.userName}</li>
+                                <li>{props.userinfo.userName}</li>
                             </ul>
                             <ul>
                                 <li>아이디</li>
-                                <li>{userInfo.userEmail}</li>
+                                <li>{props.userinfo.userEmail}</li>
                             </ul>
                     </Inner>
                     <Btn><Button width="80px;" _onClick={()=> setEdit(true)}>수정</Button></Btn>

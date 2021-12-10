@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
-
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import Text from '../elements/Text'
 import Grid from '../elements/Grid'
 import Button from '../elements/Button'
 
 const Comment = (props) => {
+  const userinfo = useSelector((state) => state.user.user.user)
+  console.log(userinfo , props)
   const {user_name, user_id, post_id, contents, createdAt} = props;
-  const [is_userid, setIs_userid] = useState(true)
+  const [is_userid, setIs_userid] = useState(userinfo.userId === props.user_id ? true : false)
   const [edit, setEdit] = useState(false)
   const [content, setContent] = useState(props.contents ? props.contents : "")
 

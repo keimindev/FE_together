@@ -7,13 +7,13 @@ import Grid from '../elements/Grid'
 import Button from '../elements/Button'
 
 import styled from 'styled-components'
+import {AccountCircle, ExitToApp} from '@material-ui/icons';
 
 
 const Header = () => {
     const dispatch = useDispatch()
     const is_session = localStorage.getItem('token') ? true : false
     const user = useSelector((state) => state.user.user.user)
-    // console.log(user.userId)
 
     useEffect(()=>{
         dispatch(userActions.getUserCheck())
@@ -36,9 +36,15 @@ const Header = () => {
                         <Link to="/">
                         <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
                         </Link>
-                        <Grid is_flex width="230px;">
-                            <Button margin="0 10px;" bg="#6adeb7;" _onClick={goTomypage}>mypage</Button>
-                            <Button bg="#007a59;" color="#ffffff;" _onClick={logout_}>Logout</Button>
+                        <Grid is_flex width="150px;">
+                            <Button margin="0 10px;" bg="#6adeb7;" _onClick={goTomypage}>
+                                {/* <AccountCircle className="icon" /> */}
+                                Mypage
+                            </Button>
+                            <Button bg="#007a59;" color="#ffffff;" _onClick={logout_}>
+                                {/* <ExitToApp className="icon"/> */}
+                                Logout
+                            </Button>
                         </Grid>
                 </Grid>
                 </InnerBox>
@@ -54,7 +60,7 @@ const Header = () => {
                     <Link to="/">
                     <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
                     </Link>
-                    <Grid is_flex width="230px;">
+                    <Grid is_flex width="200px;">
                         <Button margin="0 10px;" bg="#6adeb7;" _onClick={() => history.push('/login')}>Login</Button>
                         <Button bg="#007a59;" color="#ffffff;" _onClick={() => history.push('/signup')}>Sign up</Button>
                     </Grid>
@@ -72,6 +78,20 @@ padding: 0px 20px;
 margin-bottom: 80px;
 height: 150px;
 color: #ffffff;
+
+button{
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/* .icon{
+    font-size: 2.5em;
+    color: #fff;
+     
+    &:hover{
+        color: #007a59;
+    }
+} */
 `;
 
 const InnerBox = styled.div`
@@ -87,6 +107,8 @@ width: 200px;
 img{
     width: 100%;
 }
+
+
 `;
 
 

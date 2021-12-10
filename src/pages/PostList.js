@@ -8,12 +8,18 @@ import Button from '../elements/Button'
 import Grid from '../elements/Grid'
 
 import styled from 'styled-components'
+import {Edit} from '@material-ui/icons'
 
 
 const PostList = (props) => {
-  const dispatch = useDispatch()
-  const moveToPage = () =>{
-     history.push('/write')
+  const token = localStorage.getItem('token');
+  const moveToWrite = () =>{
+    if(!token){
+      window.alert('로그인 먼저 해주세요')
+      history.push('/login')
+    }else{
+      history.push('/write')
+    }
   }
 
   const {history} = props;
@@ -33,13 +39,19 @@ const PostList = (props) => {
         <Header/>
         <List>
           <Grid is_flex margin="0 0 40px 0;">
-              <Button width="100px;" _onClick={moveToPage}>모집하기</Button>
+              <Button width="100px;" _onClick={moveToWrite}>모집하기</Button>
           </Grid>
-          
           {post_list.map((p,i) => {
             return(
               <>
-              <Grid key={i} _onClick={() => history.push(`/detail/${p.postId}`)}>
+              <Grid key={i} _onClick={() =>{
+                  if(token){
+                    history.push(`/detail/${p.postId}`)
+                  }else{
+                    window.alert('로그인 먼저 해주세요!')
+                    history.push('/login')
+                  }
+              }}>
                 <Post key={i} {...p}/>
               </Grid>
               </>
@@ -64,6 +76,7 @@ button{
     color: #fff;
   }
 }
-`
+
+`;
 
 export default PostList

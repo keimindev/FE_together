@@ -11,15 +11,8 @@ import styled from 'styled-components'
 import MyPost from '../components/MyPost'
 import MyJoin from '../components/MyJoin'
 
-const Mypage = (props) => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(userActions.getUserCheck())
-    }, [])
-
+const Mypage = () => {
     const userinfo = useSelector((state) => state.user.user.user)
-
 
     return (
         <>

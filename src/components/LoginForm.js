@@ -2,13 +2,10 @@ import React, {useState} from 'react';
 import emailCheck from '../Shared/EmailCheck';
 import useForm from './useForm';
 import { TokenToCookie } from '../Shared/Cookies';
-import { history } from '../redux/configStore';
-import { useDispatch } from 'react-redux';
-import { actionCreators as userActions } from '../redux/modules/user';
 import { axiosInstance } from '../config';
 
+
 const ExamSignup = ({ submitForm }) => {
-  const dispatch = useDispatch();
   const { handleSubmit } = useForm(
     submitForm,
     emailCheck
@@ -16,16 +13,24 @@ const ExamSignup = ({ submitForm }) => {
 
   const [user_email, setUser_email] = useState()
   const [user_pwd, setUser_pwd] = useState()
+  const [empty, setEmpty] = useState("")
+  const [err_email, setErr_email] = useState("")
+  const [err_pw, setErr_pw] = useState("")
 
   const login = () => {
       if(user_email ==="" || user_pwd ===""){
-        window.alert("아이디 혹은 비밀번호가 공란입니다. 채워주세요");
+        setEmpty("아이디 혹은 비밀번호가 공란입니다. 채워주세요");
         return ;
     }
 
       if(!emailCheck(user_email)){
-          window.alert("이메일 형식이 맞지 않습니다");
+          setErr_email("이메일 형식이 맞지 않습니다");
           return ;
+      }
+
+      if(user_pwd.length < 6){
+        setErr_pw("비밀번호는 최소 6자리 이상이어야합니다");
+        return;
       }
 
       axiosInstance.post('/api/login', {
@@ -56,7 +61,10 @@ const ExamSignup = ({ submitForm }) => {
             value={user_email}
             onChange={(e) => setUser_email(e.target.value)}
           />
+            {empty && <p>{empty}</p>}
+            {err_email && <p>{err_email}</p>}
         </div>
+      
         <div className="form-inputs">
           <label className="form-label">Password</label>
           <input
@@ -67,8 +75,9 @@ const ExamSignup = ({ submitForm }) => {
             value={user_pwd}
             onChange={(e) => setUser_pwd(e.target.value)}
           />
+          {empty && <p>{empty}</p>}
+          {err_pw && <p>{err_pw}</p>}
         </div>
-
         <button onClick={login} className="form-input-btn" type="button">
           로그인
         </button>

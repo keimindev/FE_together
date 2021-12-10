@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { axiosInstance } from '../config'
 import { history } from '../redux/configStore'
 import { actionsCreators as userActions } from '../redux/modules/user'
-import { actionsCreators as postActions } from '../redux/modules/post'
 
 import Grid from '../elements/Grid'
 import Text from '../elements/Text'
@@ -12,16 +11,13 @@ import styled from 'styled-components'
 
 const MyJoin = (props) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.post.userInfo)
-    const userinfo = useSelector((state) => state.user.user.user)
-    console.log(user, userinfo, props)
     const token = localStorage.getItem('token')
 
     const [myJoin, setMyJoin] = useState([])
 
     useEffect(() => {
         dispatch(userActions.getUserCheck())
-        axiosInstance.get(`/api/mypage/join/${userinfo.userId}` , {
+        axiosInstance.get(`/api/mypage/join/${props.userinfo.userId}` , {
             headers: {
                     Authorization: `Bearer ${token}`,
             },
@@ -44,20 +40,18 @@ const MyJoin = (props) => {
         }
     }
 
-    console.log(arr, myJoin)
-
     return (
         <>
         <Grid margin="30px 0;">
             <Text margin="20px 0;" bold size="1.6em;">참여리스트</Text>
             {myJoin.length > 4 ? (<MORE>더 보기</MORE>) : (<></>)}
+            {myJoin.length === 0 && 
+               <EmptyBox>
+                   <p>참여 중인 모임이 없습니다 🎈 </p>
+                   <Button width="150px;" _onClick={() => history.push('/')}>스터디 모임 보러가기</Button>
+                </EmptyBox> 
+            }
             <JoinList>
-            {myJoin.length === 0 ? (
-                <>
-                 <EmptyBox>참여 중인 모임이 없습니다 🎈 </EmptyBox>
-                </>
-                ) : (
-                <>
                 {arr.map((el, i) => {
                 return(
                  <>
@@ -70,8 +64,6 @@ const MyJoin = (props) => {
                     </ListForm>
                  </>
                 )})} 
-                </>
-            )}
             </JoinList>
         </Grid>
         </>
@@ -81,13 +73,23 @@ const MyJoin = (props) => {
 const EmptyBox = styled.div`
 width: 100%;
 height: 300px;
-line-height: 300px;
 text-align : center;
 margin: 0 auto;
 border-radius: 20px;
 border:1px solid #ddd;
 
 
+p{
+    margin: 100px 0 50px 0;
+}
+
+button{
+    &:hover{
+    background-color: #31ac87;
+    color: #fff;
+}
+
+}
 `;
 
 const MORE = styled.p`

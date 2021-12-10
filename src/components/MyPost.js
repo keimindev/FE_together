@@ -14,10 +14,9 @@ const MyPost = (props) => {
     const dispatch = useDispatch()
     const [myPost, setMyPost] = useState([])
     const userInfo = useSelector((state) => state.user.user.user)
-    const id = userInfo.userId
+    const id = props.userinfo.userId
     const token = localStorage.getItem('token')
 
-    console.log(id)
 
     useEffect(() => {
         axiosInstance.get(`/api/mypage/posts/${id}` , {
@@ -26,7 +25,6 @@ const MyPost = (props) => {
            },
         })
         .then((res) => {
-            console.log(res.data.mypost)
             setMyPost(res.data.mypost)
         })
         .catch((err)=>{console.log(err)})
@@ -34,8 +32,12 @@ const MyPost = (props) => {
 
     return (
         <>
-        <Grid margin="30px 0;">
+        <Grid margin="30px 0 50px 0;">
             <Text margin="20px 0;" bold size="1.6em;">내가 쓴 글</Text>
+            {myPost.length === 0 && <EmptyBox>
+                <p>내가 쓴 글이 없습니다</p>
+                <Button width="150px;" _onClick={() => history.push('/write')}>스터디 만들기</Button>
+                </EmptyBox>}
             {myPost.map((el, i) => {
                 return(
                     <>
@@ -81,6 +83,28 @@ button{
     color: #fff;
 
 }
+}
+`;
+
+const EmptyBox = styled.div`
+width: 100%;
+height: 300px;
+text-align : center;
+margin: 0 auto;
+border-radius: 20px;
+border:1px solid #ddd;
+
+
+p{
+    margin: 100px 0 50px 0;
+}
+
+button{
+    &:hover{
+    background-color: #31ac87;
+    color: #fff;
+}
+
 }
 `;
 

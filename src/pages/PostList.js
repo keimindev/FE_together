@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
-import { history } from '../redux/configStore'
+import React, {useEffect, useState} from 'react'
 import { useSelector,  useDispatch } from 'react-redux'
+import { axiosInstance } from '../config'
 import { actionsCreators as postActions } from '../redux/modules/post'
 import Header from '../Shared/Header'
 import Post from '../components/Post'
@@ -17,16 +17,16 @@ const PostList = (props) => {
   }
 
   const {history} = props;
+  const [post_list, setPost_List] = useState([])
   
   useEffect(() => {
-    dispatch(postActions.set_List())
+    axiosInstance.get('/api/post' , )
+    .then(function(response){
+        setPost_List(response.data.posts)
+    }).catch(function(error){
+        console.log(error)
+    })
  }, [])
-
-  const post_list = useSelector((state) => state.post.list)
-
-  console.log(post_list)
-
-
 
     return (
         <>
@@ -37,9 +37,14 @@ const PostList = (props) => {
           </Grid>
           
           {post_list.map((p,i) => {
-            <Grid key={i} _onClick={() => history.push(`/detail/${p.postId}`)}>
-              <Post key={i} {...p}/>
-            </Grid>
+            return(
+              <>
+              <Grid key={i} _onClick={() => history.push(`/detail/${p.postId}`)}>
+                <Post key={i} {...p}/>
+              </Grid>
+              </>
+            )
+
           })}
         </List>
         </>

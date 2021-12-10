@@ -3,7 +3,6 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import Text from '../elements/Text'
 import Grid from '../elements/Grid'
-import Input from '../elements/Input'
 import Button from '../elements/Button'
 
 const Comment = (props) => {

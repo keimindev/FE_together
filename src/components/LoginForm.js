@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import emailCheck from '../Shared/EmailCheck';
 import useForm from './useForm';
-import { getCookie, setCookie, deleteCookie } from '../Shared/Cookies';
+import { TokenToCookie } from '../Shared/Cookies';
+import { history } from '../redux/configStore';
 import { useDispatch } from 'react-redux';
 import { actionCreators as userActions } from '../redux/modules/user';
+import { axiosInstance } from '../config';
 
 const ExamSignup = ({ submitForm }) => {
   const dispatch = useDispatch();
@@ -15,27 +17,31 @@ const ExamSignup = ({ submitForm }) => {
   const [user_email, setUser_email] = useState()
   const [user_pwd, setUser_pwd] = useState()
 
-
-  console.log(getCookie('user_id'));
-
-
-
   const login = () => {
-    if(user_email ===""|| user_pwd ===""){
-      window.alert("아이디 혹은 비밀번호가 공란입니다. 채워주세요");
-      return ;
-  }
-
-    if(!emailCheck(user_email)){
-        window.alert("이메일 형식이 맞지 않습니다");
+      if(user_email ==="" || user_pwd ===""){
+        window.alert("아이디 혹은 비밀번호가 공란입니다. 채워주세요");
         return ;
     }
 
-    dispatch(userActions.loginDB(user_email, user_pwd));
+      if(!emailCheck(user_email)){
+          window.alert("이메일 형식이 맞지 않습니다");
+          return ;
+      }
+
+      axiosInstance.post('/api/login', {
+        userEmail: user_email,
+        password: user_pwd,
+      }).then((response) => {
+        console.log(response)
+        const accessToken = response.data.token
+        TokenToCookie(accessToken);
+        localStorage.setItem("token", accessToken)
+        window.location.href="/"
+      }).catch((error) => {
+        console.log(error)
+      });
+    
   };
-
-  console.log(user_email, user_pwd)
-
 
   return (
     <div className="form-content-right">
@@ -50,7 +56,6 @@ const ExamSignup = ({ submitForm }) => {
             value={user_email}
             onChange={(e) => setUser_email(e.target.value)}
           />
-          {/* {errors.email && <p>{errors.email}</p>} */}
         </div>
         <div className="form-inputs">
           <label className="form-label">Password</label>
@@ -62,10 +67,9 @@ const ExamSignup = ({ submitForm }) => {
             value={user_pwd}
             onChange={(e) => setUser_pwd(e.target.value)}
           />
-          {/* {errors.password && <p>{errors.password}</p>} */}
         </div>
 
-        <button onClick={login} className="form-input-btn" type="submit">
+        <button onClick={login} className="form-input-btn" type="button">
           로그인
         </button>
       </form>

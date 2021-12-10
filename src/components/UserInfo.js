@@ -1,23 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { actionsCreators as postActions } from '../redux/modules/post'
+import { actionsCreators as userActions } from '../redux/modules/user'
 import Grid from '../elements/Grid'
 import Button from '../elements/Button'
 import styled from 'styled-components'
 
 const UserInfo = (props) => {
     const dispatch = useDispatch()
-    const user = useSelector((state) => state.post.userInfo)
-    const [username, setUsername] = useState(user.userInfo.userName)
+    const userInfo = useSelector((state) => state.user.user.user)
+    const [username, setUsername] = useState(userInfo.userName)
     const [pw, setPw] = useState()
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
-
+    
     //eidt
     const post_id = props.id
     const is_edit = post_id ? true : false
     // let userInfo = is_edit ? user.find((u) => u.userName === post_id) : null
     
+    useEffect(() =>{
+        dispatch(userActions.getUserCheck())
+   },[])
 
     const editinfo = () => {
         if(!username || !pw || !pwCheck){
@@ -29,12 +32,13 @@ const UserInfo = (props) => {
             window.alert("비밀번호가 일치 하지 않습니다!😊");
             return;
         }
-        dispatch(postActions.edit_Info({ userName: username , password: pw}))
+        dispatch(userActions.modifyUserInfo({ userName: username , password: pw, passwordConfirm: pwCheck}, userInfo.userId))
         setEdit(false)
+        // window.location.reload()
     }
     
 
-    const profile = user.userInfo.userName.split('')[0]
+    const profile = userInfo.userName.split('')[0]
     
     return (
         <>
@@ -53,7 +57,7 @@ const UserInfo = (props) => {
                     </ul>
                     <ul>
                         <li>아이디</li>
-                        <li>{user.userInfo.userId}</li>
+                        <li>{userInfo.userEmail}</li>
                     </ul>
                     </Inner>
                     <Inner>
@@ -75,11 +79,11 @@ const UserInfo = (props) => {
                         <Inner>
                             <ul>
                                 <li>닉네임</li>
-                                <li>{user.userInfo.userName}</li>
+                                <li>{userInfo.userName}</li>
                             </ul>
                             <ul>
                                 <li>아이디</li>
-                                <li>{user.userInfo.userId}</li>
+                                <li>{userInfo.userEmail}</li>
                             </ul>
                     </Inner>
                     <Btn><Button width="80px;" _onClick={()=> setEdit(true)}>수정</Button></Btn>

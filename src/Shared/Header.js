@@ -1,17 +1,33 @@
-import React, {useState} from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { actionsCreators as userActions } from '../redux/modules/user'
 import { history } from '../redux/configStore'
 import Grid from '../elements/Grid'
-import Text from '../elements/Text'
 import Button from '../elements/Button'
 
 import styled from 'styled-components'
 
 
 const Header = () => {
-    const [is_login, setIs_login] = useState(false)
+    const dispatch = useDispatch()
+    const is_session = localStorage.getItem('token') ? true : false
+    const user = useSelector((state) => state.user.user.user)
+    // console.log(user.userId)
 
-    if(is_login){
+    useEffect(()=>{
+        dispatch(userActions.getUserCheck())
+    },[])
+
+    const logout_ = () => {
+        localStorage.removeItem('token')
+        window.location.href="/"
+    }
+    const goTomypage = () => {
+        history.push(`/page/${user.userId}`)
+    }
+
+    if(is_session){
         return(
             <>
             <HeaderForm>
@@ -21,8 +37,8 @@ const Header = () => {
                         <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
                         </Link>
                         <Grid is_flex width="230px;">
-                            <Button margin="0 10px;" bg="#6adeb7;">mypage</Button>
-                            <Button bg="#007a59;" color="#ffffff;">Logout</Button>
+                            <Button margin="0 10px;" bg="#6adeb7;" _onClick={goTomypage}>mypage</Button>
+                            <Button bg="#007a59;" color="#ffffff;" _onClick={logout_}>Logout</Button>
                         </Grid>
                 </Grid>
                 </InnerBox>

@@ -102,6 +102,7 @@ const InnerBox=styled.div`
     padding:25px 10px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+    padding-left: 20px;
 
     &:hover{
         /* background-color: #007a59;  */

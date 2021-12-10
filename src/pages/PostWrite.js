@@ -1,6 +1,8 @@
 import React , {useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionsCreators as postActions } from '../redux/modules/post'
+import { actionsCreators as userActions } from '../redux/modules/user'
+import { axiosInstance } from '../config'
 import {history} from '../redux/configStore'
 import moment from 'moment'
 import Grid from '../elements/Grid'
@@ -12,19 +14,32 @@ import Header from '../Shared/Header'
 
 const PostWrite = (props) => {
     const dispatch = useDispatch()
-    const post = useSelector(state => state.post.list)
-
+    const token = localStorage.getItem('token')
+    const [postInfo, setPostInfo] = useState([])
+    
     //eidt
-    const post_id = props.match.params.id
-    const is_edit = post_id ? true : false
-    let postInfo = is_edit ? post.find((p) => p.postId === post_id) : null
+    const id = props.match.params.id
+    const is_edit = id ? true : false
 
     useEffect(() =>{
-        if(is_edit && !postInfo ){
-            history.goBack();
+        dispatch(userActions.getUserCheck())
+        if(!token){
+            window.alert('로그인 먼저 해주세요!')
+            history.push('/login');
+            return;
         }
-    })
-    
+
+        axiosInstance.get(`/api/post/${id}`, )
+        .then((res) =>{
+            setPostInfo(res.data)
+        })
+        .catch((err)=> console.log(err))
+
+    },[])
+
+
+    console.log(postInfo, postInfo.title)
+
     const [title, setTitle] = useState(postInfo ? postInfo.title : ""); 
     const [content,setContent] = useState(postInfo ? postInfo.content : "");
     const [subject,setSubject] = useState();
@@ -33,21 +48,35 @@ const PostWrite = (props) => {
     const date = moment().format("YYYY-MM-DD")
 
     const addpost =() =>{
+
         if( !title || !content || !subject || !deadline || !state ){
             window.alert("빈 공간을 채워주세요!")
             return ;
         }
-        dispatch(postActions.add_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}))
-        //dispatch(postActions.add_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}))
-    }
+        dispatch(postActions.add_Post({
+            title: title, 
+            subject: subject,
+            content: content,  
+            deadline: deadline, 
+            state: state
+        }))
 
+
+    }
 
     const editpost = () =>{
         if( !title || !content || !subject || !deadline || !state ){
             window.alert("빈 공간을 채워주세요!")
             return ;
         }
-        dispatch(postActions.edit_Post({title: title, content: content, subject: subject, deadline: deadline, state: state}, post_id))
+        dispatch(postActions.edit_Post({
+            title: title, 
+            subject: subject,
+            content: content, 
+            deadline: deadline, 
+            state: state
+        }, id))
+        window.location.href = "/";
     }
 
     return (
@@ -86,7 +115,7 @@ const PostWrite = (props) => {
                     onChange={(e) => setDeadline(e.target.value)}/>
             </Grid>
             {is_edit ? (
-                <Btn><Button width="120px;" _onClick={editpost}>수정하기</Button></Btn>
+                <Btn><Button width="120px;" _onClick={editpost}>수정 등록</Button></Btn>
             ) : (
                 <Btn><Button width="120px;" _onClick={addpost}>등록하기</Button></Btn>        
             )}

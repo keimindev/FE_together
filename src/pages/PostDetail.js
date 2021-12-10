@@ -1,7 +1,9 @@
 import React, {useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import { history} from '../redux/configStore'
 import { actionsCreators as postActions } from '../redux/modules/post'
+import { actionsCreators as userActions } from '../redux/modules/user'
+import { actionsCreators as joinActions } from '../redux/modules/join'
 import {axiosInstance} from "../config";
 
 import CommentList from '../components/CommentList'
@@ -15,15 +17,34 @@ import Header from '../Shared/Header';
 const PostDetail = (props) => {
     const dispatch = useDispatch()
     const id = props.match.params.id;
-    const [is_login, setIs_login] = useState(false)
-    const [join, setJoin] = useState(false)
-    //const [info, setInfo] = useState({})
+    const is_login = localStorage.getItem('token') ? true : false
+    const user = useSelector((state) => state.user.user.user)
+    const [join, setJoin] = useState()
+    const [info, setInfo] = useState([])
+    const is_me = info.userId === user.userId ? true : false
+    const token = localStorage.getItem('token')
 
-    const _info = useSelector(state => state.post.list)
-    const idx = _info.findIndex((el) => el.postId === id)
-    const info=_info[idx]
+    useEffect(() =>{
+        dispatch(userActions.getUserCheck())
+        axiosInstance.get(`/api/post/${id}`, )
+        .then((res) =>{
+            setInfo(res.data)
+        })
+        .catch((err)=> console.log(err))
 
-    console.log(info)
+                    
+        axiosInstance.get(`/api/join/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+           },
+            })
+            .then((res) =>{ 
+                console.log(res)
+                console.log(res.data.status)
+                setJoin(res.data.status)
+            })
+            .catch((err)=> console.log(err))
+   },[])
 
     //date gap
     const setDate = new Date(info.deadline_date)
@@ -32,27 +53,34 @@ const PostDetail = (props) => {
     let gap = Math.ceil(distance / (1000 * 60 * 60 * 24))
 
 
-    useEffect(() =>{
-         dispatch(postActions.get_Post(id))
-        // axiosInstance.get(`/api/post/${id}`, )
-        // .then((res) =>{
-        //     console.log(res.data)
-        //     setInfo(res.data)
-        // })
-        // .catch((err)=> console.log(err))
-    },[])
-
-
+    //delete btn
     const delBtn = () =>{
         const ok = window.confirm("게시물을 지우시겠습니까?");
-        if(ok) dispatch(postActions.delPost(id))
-        history.push('/')
+
+        axiosInstance.delete(`/api/post/${id}` ,{    
+            headers: {
+                  Authorization: `Bearer ${token}`,
+          },})
+        .then(function(res){
+            if(ok){
+                dispatch(postActions.delPost(id))
+            }else{
+                return;
+            } 
+        }).catch(function(error){
+            console.log(error)
+        })
+        window.location.href = '/';
+    }
+
+    const editOnePost = () => {
+        history.push(`/write/${id}`)
     }
 
     return (
         <>
         <Header/>
-        <DetailBox>
+        <DetailBox key={info.postId}>
         <Grid>
             <Title>
                 <span>#{info.subject}</span>
@@ -73,9 +101,10 @@ const PostDetail = (props) => {
                     <span>{info.currentState} / {info.state}</span>
 
                 </ContentInfo>
-                {is_login ? (
+
+                {is_login && is_me ? (
                 <Btn>
-                    <Button width="80px;" margin="0 10px;" _onClick={() => history.push(`/write/2`)}>수정</Button>
+                    <Button width="80px;" margin="0 10px;" _onClick={editOnePost}>수정</Button>
                     <Button width="80px;" _onClick={() => delBtn()}>삭제</Button>
                 </Btn>
                 ) : (
@@ -86,10 +115,29 @@ const PostDetail = (props) => {
                         </>
                     ) : (
                         <>
-                        {join ? <JoinBtn><Button width="160px;" margin="0 10px;" bg="#007a59;" color="#fff;" _onClick={() => setJoin(false)}>스터디 참여완료 👍🏻</Button></JoinBtn>
-                        :
-                        <JoinBtn><Button width="160px;" margin="0 10px;" _onClick={() => setJoin(true)}>스터디 참여하기</Button></JoinBtn> 
-                        }
+                        { join ? (
+                            <>
+                            <JoinBtn>
+                                <Button width="160px;" margin="0 10px;" 
+                                bg="#007a59;" 
+                                color="#fff;" 
+                                _onClick={() => {
+                                    dispatch(joinActions.send_Join(info.postId))
+                                    setJoin(false)
+                                }}>스터디 참여완료 👍🏻</Button>
+                            </JoinBtn>
+                            </>
+                        ) : ( 
+                            <>
+                            <JoinBtn>
+                                <Button width="160px;" margin="0 10px;" 
+                                _onClick={() =>{
+                                    dispatch(joinActions.send_Join(info.postId))
+                                    setJoin(true)
+                                }}>스터디 참여하기</Button>
+                            </JoinBtn> 
+                           </>
+                        )}
                         </>
                     ) }
                   </>

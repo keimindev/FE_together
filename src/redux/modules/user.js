@@ -1,18 +1,16 @@
-
-import { createAction, handleActions } from 'redux-actions';
-import { produce } from 'immer';
+import { createAction, handleActions } from "redux-actions";
+import { produce } from "immer";
 import 'moment';
 import {history} from '../configStore'
-import { TokenToCookie, Logout } from '../../Shared/Cookies';
-import Cookies from 'universal-cookie';
 import {axiosInstance } from '../../config';
-import { setCookie, deleteCookie, getCookie } from '../../Shared/Cookies';
-// import {history} from '../configureStore';
+import { setCookie, deleteCookie } from '../../Shared/Cookies';
 
+const token = localStorage.getItem('token')
 const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
 const SIGN_UP = 'SIGN_UP';
-const ON_LOGIN = 'ON_LOGIN';
+const GET_USER = 'GET_USER';
+const EDIT_USERINFO = 'EDIT_USERINFO';
 
 const logIn = createAction(LOG_IN, (accountId, nickname, id, token) => ({
   accountId,
@@ -26,40 +24,21 @@ const signUp = createAction(SIGN_UP, (id, email, nickname, password) => ({
   email,
   password,
 }));
-const Onlogin = createAction(ON_LOGIN, (accountId, nickname, id, token) => ({
-  accountId,
-  nickname,
-  id,
-  token,
-}));
+
+
+const getUser = createAction(GET_USER, (user) => ({user}))
+const logout = createAction(LOG_OUT, (user) => ({user}));
+const editUserInfo = createAction(EDIT_USERINFO, (user, userid) => ({user, userid}))
 
 const initialState = {
-  accountId: '',
-  nickname: '',
-  id: '',
-  token: '',
+  user: {
+    userEmail : "",
+    userId : 1,
+    userName: "",
+}
+
 };
-const loginDB = (id, pwd) => {
-  return function (dispatch, { history }) {
-    console.log(id, pwd);
-    axiosInstance.post('/api/login', {
-        accountId: id,
-        password: pwd,
-      })
-      .then(function (response) {
-        const accessToken = response.data.token.replace('"', '');
-        const accountId = response.data.user.accountId;
-        const nickname = response.data.user.nickname;
-        const id = response.data.user.id;
-        TokenToCookie(accessToken);
-        dispatch(Onlogin(accountId, nickname, id, accessToken));
-        window.alert('로그인 성공: 환영합니다! :)');
-      })
-      .catch(function (error) {
-        console.log(`로그인 오류 발생: ${error}`);
-      });
-  };
-};
+
 
 const signUpDB = (id, nickname, pwd, pwdcheck) => {
   return function (dispatch) {
@@ -81,37 +60,84 @@ const signUpDB = (id, nickname, pwd, pwdcheck) => {
   };
 };
 
+
+const log_Out = () => {
+  return function(dispatch, getState, {history}){
+    dispatch(logout())
+    history.replace('/')
+  }
+}
+
+const getUserCheck = () =>{
+  return function (dispatch, getState, {history}){
+    axiosInstance.get(`/api/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+  })
+    .then((res) => {
+    console.log(res)
+    dispatch(getUser(res.data))
+    })
+    .catch((err) => {console.log(err)})
+  }
+}
+
+
+const modifyUserInfo = (user, userid) =>{
+  return function (dispatch, getState, {history}){
+    axiosInstance.patch(`/api/mypage/${userid}`,{
+      userName : user.userName,
+      password : user.password,
+      passwordConfirm : user.passwordConfirm
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      console.log(res)
+      dispatch(editUserInfo(res))
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+}
+
+
+
 //reducer
 export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
+        setCookie("is_login", "success")
         draft.list = { ...action.payload };
       }),
     [SIGN_UP]: (state, action) =>
       produce(state, (draft) => {
         draft.list = { ...action.payload };
       }),
-    [ON_LOGIN]: (state, action) =>
-      produce(state, (draft) => {
-        draft.accountId = action.payload.accountId;
-        draft.nickname = action.payload.nickname;
-        draft.id = action.payload.id;
-        draft.token = action.payload.accessToken;
-      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
+        deleteCookie("is_login");
         console.log(action.payload);
+      }),
+
+      [GET_USER]: (state, action) =>
+      produce(state, (draft) => {
+        setCookie("is_login", "success");
+        draft.user = action.payload.user;
       }),
   },
   initialState
 );
 
-const actionCreators = {
+const actionsCreators = {
   logIn,
-  loginDB,
-  Onlogin,
   signUpDB,
+  log_Out,
+  getUserCheck,
+  modifyUserInfo,
 };
 
-export { actionCreators };
+export { actionsCreators };

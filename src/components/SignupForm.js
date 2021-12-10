@@ -3,7 +3,7 @@ import { history } from '../redux/configStore';
 import emailCheck from '../Shared/EmailCheck';
 import useForm from '../components/useForm';
 import '../Shared/exam.css';
-import { actionCreators } from '../redux/modules/user';
+import { actionsCreators } from '../redux/modules/user';
 import { useDispatch } from 'react-redux';
 
 const SignupForm = ({ submitForm }) => {
@@ -51,9 +51,9 @@ const SignupForm = ({ submitForm }) => {
     }
 
     dispatch(
-      actionCreators.signUpDB(
-        user_nickname,
+      actionsCreators.signUpDB(
         user_email,
+        user_nickname,
         user_pwd,
         user_pwdcheck
       )
@@ -111,7 +111,7 @@ const SignupForm = ({ submitForm }) => {
           />
           {errors.password2 && <p>{errors.password2}</p>}
         </div>
-        <button onClick={signup} className="form-input-btn" type="submit">
+        <button onClick={signup} className="form-input-btn" type="button">
           회원가입
         </button>
         <span className="form-input-login">

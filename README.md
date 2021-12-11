@@ -10,7 +10,8 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/65863834/145668932-4a6c3e3c-886f-423c-8494-7aad7764a3ee.png" alt="logo" />
 <br></br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UyiIcpVmVmE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<embed>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UyiIcpVmVmE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></embed>
 
 - Link
   - https://www.youtube.com/watch?v=UyiIcpVmVmE
@@ -20,9 +21,9 @@
 ## Schedule & Developers
 - 2021-12-06 ~ 2021-12-11
 - Backend developers 
-  - 김태우, 민수현, 이동호
+  - [김태우](https://github.com/4pril91), [민수현](https://github.com/SuHyeon-Eleven), [이동호](https://github.com/TnIoP)
 - Frontend developers 
-  - 박서담, 정민경 
+  - [박서담](https://github.com/SSDPARK), [정민경](https://github.com/keimindev) 
 <br></br>
 
 ## Tech Stack
@@ -62,7 +63,6 @@
   - 토큰 인증을 통해서 자신의 글만 수정, 삭제가 가능합니다
 
  
-<br></br>
 <br></br>
 <br></br>
 <br></br>

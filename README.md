@@ -2,11 +2,11 @@
 스터디 모임 서비스
 <br></br>
 
-## 👋🏻 프로젝트 소개
+## 🎡 프로젝트 소개
 ##### 개발 공부를 하고 싶은 사람들의 모임! 혼자보단 함께! 함께 공부하고 싶은 사람들을 모으고 함께 공부하기 위한 스터디 모임 서비스 
 <br></br>
 
-## Together Logo & Video 
+## 🎥 Together Logo & Video 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/65863834/145668932-4a6c3e3c-886f-423c-8494-7aad7764a3ee.png" alt="logo" />
 <br></br>
@@ -16,7 +16,7 @@
 </p>
 <br></br>
 
-## Schedule & Developers
+## 📅 Schedule & Developers
 - 2021-12-06 ~ 2021-12-11
 - Backend developers 
   - [김태우](https://github.com/4pril91), [민수현](https://github.com/SuHyeon-Eleven), [이동호](https://github.com/TnIoP)
@@ -24,7 +24,7 @@
   - [박서담](https://github.com/SSDPARK), [정민경](https://github.com/keimindev) 
 <br></br>
 
-## Tech Stack
+## 🛠 Tech Stack
 - Backend Tech Stack
   - Node.js
   - Express
@@ -35,14 +35,14 @@
   - Redux
 
 <br></br>
-## Notion & WireFrame & API
+## 📖 Notion & WireFrame & API
 - Project Note
   - https://climbing-law-501.notion.site/128814132923439b81265970a2e4885c
 - Swagger UI API
   - http://13.124.187.20/swagger/
  
 <br></br>
-## 핵심기능
+## ✨ 핵심기능
 - 로그인, 회원가입
   - JWT를 이용하여 로그인과 회원가입을 구현하였습니다.
   - 아이디는 숫자, 영문자 소/대문자로 구성해야 합니다

@@ -1,7 +1,9 @@
 # Together (mini project - 1)
+<br></br>
 
 ## 👋🏻 프로젝트 소개
 
+<br></br>
 ### 스터디 구인 사이트
 
 

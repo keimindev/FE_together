@@ -1,13 +1,14 @@
 # Together (mini project - 1)
 
-
 ## 👋🏻 프로젝트 소개
 
 ### 스터디 구인 사이트
 
 
 ## Together Video
+https://www.youtube.com/watch?v=UyiIcpVmVmE
 
+<br></br>
 
 ## Schedule & Developers
 - 2021-12-06 ~ 2021-12-11
@@ -36,6 +37,9 @@
   - http://13.124.187.20/swagger/
  
 <br></br>
+
+## Page 
+
 
 
 

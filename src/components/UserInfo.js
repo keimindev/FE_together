@@ -12,7 +12,6 @@ const UserInfo = (props) => {
     const [pw, setPw] = useState()
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
-    console.log(props.userinfo)
     
     //eidt
     const post_id = props.id
@@ -21,7 +20,7 @@ const UserInfo = (props) => {
     
     useEffect(() =>{
         dispatch(userActions.getUserCheck())
-   },[userInfo])
+   },[])
 
     const editinfo = () => {
         if(!username || !pw || !pwCheck){

@@ -19,7 +19,6 @@ https://www.youtube.com/watch?v=UyiIcpVmVmE
   - 김태우, 민수현, 이동호
 - Frontend developers 
   - 박서담, 정민경 
- 
 <br></br>
 
 ## Tech Stack
@@ -33,7 +32,6 @@ https://www.youtube.com/watch?v=UyiIcpVmVmE
   - Redux
 
 <br></br>
-
 ## Notion & WireFrame & API
 - Project Note
   - https://climbing-law-501.notion.site/128814132923439b81265970a2e4885c

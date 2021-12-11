@@ -21,6 +21,7 @@ const Header = () => {
 
     const logout_ = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userId')
         window.location.href="/"
     }
     const goTomypage = () => {

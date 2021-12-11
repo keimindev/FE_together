@@ -38,7 +38,6 @@ const ExamSignup = ({ submitForm }) => {
         userEmail: user_email,
         password: user_pwd,
       }).then((response) => {
-        console.log(response)
         const accessToken = response.data.token
         TokenToCookie(accessToken);
         localStorage.setItem("token", accessToken)

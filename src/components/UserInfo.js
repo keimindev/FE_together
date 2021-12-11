@@ -8,15 +8,16 @@ import styled from 'styled-components'
 const UserInfo = (props) => {
     const dispatch = useDispatch()
     const userInfo = useSelector((state) => state.user.user.user)
-    const [username, setUsername] = useState(props.userinfo.userName)
+    const [username, setUsername] = useState(props.userName)
     const [pw, setPw] = useState()
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
+    const curUser = JSON.parse(localStorage.getItem('userId'))
+    console.log(curUser.user)
     
     //eidt
     const post_id = props.id
     const is_edit = post_id ? true : false
-    // let userInfo = is_edit ? user.find((u) => u.userName === post_id) : null
     
     useEffect(() =>{
         dispatch(userActions.getUserCheck())
@@ -34,11 +35,11 @@ const UserInfo = (props) => {
         }
         dispatch(userActions.modifyUserInfo({ userName: username , password: pw, passwordConfirm: pwCheck}, props.userinfo.userId))
         setEdit(false)
+        window.location.reload()
     
     }
-    
 
-    const profile = props.userinfo.userName.split('')[0]
+   const profile = curUser.user.userName.split('')[0]
     
     return (
         <>
@@ -57,7 +58,7 @@ const UserInfo = (props) => {
                     </ul>
                     <ul>
                         <li>아이디</li>
-                        <li>{props.userinfo.userEmail}</li>
+                        <li>{curUser.user.userEmail}</li>
                     </ul>
                     </Inner>
                     <Inner>
@@ -79,11 +80,11 @@ const UserInfo = (props) => {
                         <Inner>
                             <ul>
                                 <li>닉네임</li>
-                                <li>{props.userinfo.userName}</li>
+                                <li>{curUser.user.userName}</li>
                             </ul>
                             <ul>
                                 <li>아이디</li>
-                                <li>{props.userinfo.userEmail}</li>
+                                <li>{curUser.user.userEmail}</li>
                             </ul>
                     </Inner>
                     <Btn><Button width="80px;" _onClick={()=> setEdit(true)}>수정</Button></Btn>

@@ -12,25 +12,30 @@ import styled from 'styled-components'
 import Grid from '../elements/Grid'
 import Button from '../elements/Button'
 import Header from '../Shared/Header';
+import { LaptopWindowsSharp } from '@material-ui/icons'
 
 
 const PostDetail = (props) => {
     const dispatch = useDispatch()
     const id = props.match.params.id;
     const is_login = localStorage.getItem('token') ? true : false
-    const user = useSelector((state) => state.user.user.user)
+    //const user = useSelector((state) => state.user.user.user)
     const [join, setJoin] = useState()
     const [info, setInfo] = useState([])
-    const is_me = info.userId === user.userId ? true : false
     const token = localStorage.getItem('token')
+    const curUser = JSON.parse(localStorage.getItem('userId'))
+    const is_me = info.userId === curUser.userId ? true : false
 
     useEffect(() =>{
-        axiosInstance.get(`/api/post/${id}`, )
+        axiosInstance.get(`/api/post/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+           },
+        } )
         .then((res) =>{
             setInfo(res.data)
         })
         .catch((err)=> console.log(err))
-
                     
         axiosInstance.get(`/api/join/${id}`, {
             headers: {
@@ -42,6 +47,7 @@ const PostDetail = (props) => {
             })
             .catch((err)=> console.log(err))
    },[])
+
 
     //date gap
     const setDate = new Date(info.deadline_date)
@@ -121,6 +127,7 @@ const PostDetail = (props) => {
                                 _onClick={() => {
                                     dispatch(joinActions.send_Join(info.postId))
                                     setJoin(false)
+                                    window.location.reload()
                                 }}>스터디 참여완료 👍🏻</Button>
                             </JoinBtn>
                             </>
@@ -131,6 +138,7 @@ const PostDetail = (props) => {
                                 _onClick={() =>{
                                     dispatch(joinActions.send_Join(info.postId))
                                     setJoin(true)
+                                    window.location.reload()
                                 }}>스터디 참여하기</Button>
                             </JoinBtn> 
                            </>

@@ -41,7 +41,7 @@ const PostDetail = (props) => {
                 setJoin(res.data.status)
             })
             .catch((err)=> console.log(err))
-   },[])
+   },[join, info])
 
     //date gap
     const setDate = new Date(info.deadline_date)

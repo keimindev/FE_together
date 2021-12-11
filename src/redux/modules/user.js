@@ -76,7 +76,6 @@ const getUserCheck = () =>{
       },
   })
     .then((res) => {
-      console.log(res)
     dispatch(getUser(res.data))
     })
     .catch((err) => {console.log(err)})

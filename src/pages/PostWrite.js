@@ -52,6 +52,8 @@ const PostWrite = (props) => {
             window.alert("빈 공간을 채워주세요!")
             return ;
         }
+
+
         dispatch(postActions.add_Post({
             title: title, 
             subject: subject,

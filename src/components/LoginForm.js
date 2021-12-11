@@ -16,6 +16,7 @@ const ExamSignup = ({ submitForm }) => {
   const [empty, setEmpty] = useState("")
   const [err_email, setErr_email] = useState("")
   const [err_pw, setErr_pw] = useState("")
+  const [err_login, setErr_login] = useState("")
 
   const login = () => {
       if(user_email ==="" || user_pwd ===""){
@@ -43,7 +44,9 @@ const ExamSignup = ({ submitForm }) => {
         localStorage.setItem("token", accessToken)
         window.location.href="/"
       }).catch((error) => {
+        setErr_login("이메일 혹은 비밀번호가 잘못 입력되었습니다")
         console.log(error)
+        
       });
     
   };
@@ -81,6 +84,7 @@ const ExamSignup = ({ submitForm }) => {
         <button onClick={login} className="form-input-btn" type="button">
           로그인
         </button>
+        {err_login && <p className="err">{err_login}</p>}
       </form>
     </div>
   );

@@ -13,6 +13,7 @@ const UserInfo = (props) => {
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
     console.log(props.userinfo)
+    
     //eidt
     const post_id = props.id
     const is_edit = post_id ? true : false

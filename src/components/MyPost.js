@@ -28,7 +28,7 @@ const MyPost = (props) => {
             setMyPost(res.data.mypost)
         })
         .catch((err)=>{console.log(err)})
-    }, [])
+    }, [myPost])
 
     return (
         <>

@@ -39,11 +39,9 @@ const Header = () => {
                         </Link>
                         <Grid is_flex width="150px;">
                             <Button margin="0 10px;" bg="#6adeb7;" _onClick={goTomypage}>
-                                {/* <AccountCircle className="icon" /> */}
                                 Mypage
                             </Button>
                             <Button bg="#007a59;" color="#ffffff;" _onClick={logout_}>
-                                {/* <ExitToApp className="icon"/> */}
                                 Logout
                             </Button>
                         </Grid>

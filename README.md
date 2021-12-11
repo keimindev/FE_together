@@ -27,6 +27,7 @@ https://www.youtube.com/watch?v=UyiIcpVmVmE
 <br></br>
 - Frontend Tech Stack
   - React.js
+  - Redux
 
 <br></br>
 

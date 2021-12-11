@@ -12,12 +12,13 @@ import styled from 'styled-components'
 const MyJoin = (props) => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token')
-
+    const curUser = JSON.parse(localStorage.getItem('userId'))
     const [myJoin, setMyJoin] = useState([])
+
 
     useEffect(() => {
         dispatch(userActions.getUserCheck())
-        axiosInstance.get(`/api/mypage/join/${props.userinfo.userId}` , {
+        axiosInstance.get(`/api/mypage/join/${curUser.user.userId}` , {
             headers: {
                     Authorization: `Bearer ${token}`,
             },

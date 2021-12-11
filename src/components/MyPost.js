@@ -13,10 +13,12 @@ import styled from 'styled-components'
 const MyPost = (props) => {
     const dispatch = useDispatch()
     const [myPost, setMyPost] = useState([])
+    const curUser = JSON.parse(localStorage.getItem('userId'))
     const userInfo = useSelector((state) => state.user.user.user)
-    const id = props.userinfo.userId
+    const id = curUser.user.userId
     const token = localStorage.getItem('token')
-
+    
+    console.log(userInfo, id)
 
     useEffect(() => {
         axiosInstance.get(`/api/mypage/posts/${id}` , {

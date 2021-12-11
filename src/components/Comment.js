@@ -8,7 +8,8 @@ import Button from '../elements/Button'
 const Comment = (props) => {
   const userinfo = useSelector((state) => state.user.user.user)
   const {user_name, user_id, post_id, contents, createdAt} = props;
-  const [is_userid, setIs_userid] = useState(userinfo.userId === props.user_id ? true : false)
+  const curUser = localStorage.getItem('userId')
+  const [is_userid, setIs_userid] = useState(curUser === props.user_id ? true : false)
   const [edit, setEdit] = useState(false)
   const [content, setContent] = useState(props.contents ? props.contents : "")
 

@@ -4,6 +4,7 @@ import 'moment';
 import {history} from '../configStore'
 import {axiosInstance } from '../../config';
 import { setCookie, deleteCookie } from '../../Shared/Cookies';
+import { TokenToCookie } from '../../Shared/Cookies';
 
 const token = localStorage.getItem('token')
 const LOG_IN = 'LOG_IN';
@@ -76,6 +77,7 @@ const getUserCheck = () =>{
       },
   })
     .then((res) => {
+    localStorage.setItem('userId', JSON.stringify(res.data))
     dispatch(getUser(res.data))
     })
     .catch((err) => {
@@ -96,6 +98,10 @@ const modifyUserInfo = (user, userid) =>{
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
+      console.log(res)
+      const accessToken = res.data.token
+      TokenToCookie(accessToken);
+      localStorage.setItem("token", accessToken)
       dispatch(editUserInfo(res))
     }).catch((err) => {
       console.log("이미 사용하고 있는 닉네임입니다")

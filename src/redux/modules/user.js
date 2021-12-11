@@ -78,7 +78,9 @@ const getUserCheck = () =>{
     .then((res) => {
     dispatch(getUser(res.data))
     })
-    .catch((err) => {console.log(err)})
+    .catch((err) => {
+      console.log(err)
+    })
   }
 }
 
@@ -94,9 +96,9 @@ const modifyUserInfo = (user, userid) =>{
         Authorization: `Bearer ${token}`,
       },
     }).then((res) => {
-      console.log(res)
       dispatch(editUserInfo(res))
     }).catch((err) => {
+      console.log("이미 사용하고 있는 닉네임입니다")
       console.log(err)
     })
   }

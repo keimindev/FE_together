@@ -12,7 +12,6 @@ const UserInfo = (props) => {
     const [pw, setPw] = useState()
     const [pwCheck, setPwCheck] = useState()
     const [edit, setEdit] = useState(false)
-    console.log(props.userinfo)
     
     //eidt
     const post_id = props.id
@@ -21,7 +20,7 @@ const UserInfo = (props) => {
     
     useEffect(() =>{
         dispatch(userActions.getUserCheck())
-   },[userInfo])
+   },[])
 
     const editinfo = () => {
         if(!username || !pw || !pwCheck){
@@ -113,28 +112,39 @@ input{
 }
 
 ul{
-    display: flex;
     margin: 15px 0;
 
     li{
         list-style: none;
-        padding: 13px 5px;
+        padding: 10px 5px;
         color: #fff;
     }
 
     li:nth-child(1){
         width: 110px;
+        height: 40px;
         margin-right: 10px;
         border-radius: 10px;
         background-color: rgba(255,255,255,0.7);
         text-align: center;
         color: #222;
     }
+
+    li:nth-child(2){
+        width: 150px;
+        height: 60px;
+        margin-right: 10px;
+
+        input{
+            height: 100%;
+        }
+    }
+
 }
 `;
 
 const Inner = styled.div`
-width: 45%;
+width: 50%;
 `;
 
 

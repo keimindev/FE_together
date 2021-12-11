@@ -5,7 +5,9 @@
 ### 스터디 구인 사이트
 
 
-## Together Video
+## Together Logo & Video 
+<img src="https://user-images.githubusercontent.com/65863834/145668932-4a6c3e3c-886f-423c-8494-7aad7764a3ee.png" alt="logo" />
+<br></br>
 https://www.youtube.com/watch?v=UyiIcpVmVmE
 
 <br></br>

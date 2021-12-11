@@ -1,4 +1,4 @@
-# Together (mini project - 1)
+# Together (mini project - 2)
 스터디 모임 서비스
 <br></br>
 

@@ -10,10 +10,8 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/65863834/145668932-4a6c3e3c-886f-423c-8494-7aad7764a3ee.png" alt="logo" />
 <br></br>
-<embed>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UyiIcpVmVmE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></embed>
 
-- Link
+- Youtube
   - https://www.youtube.com/watch?v=UyiIcpVmVmE
 </p>
 <br></br>

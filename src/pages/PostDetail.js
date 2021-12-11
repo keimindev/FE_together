@@ -24,7 +24,8 @@ const PostDetail = (props) => {
     const [info, setInfo] = useState([])
     const token = localStorage.getItem('token')
     const curUser = JSON.parse(localStorage.getItem('userId'))
-    const is_me = info.userId === curUser.userId ? true : false
+    const is_me = info.userId === curUser.user.userId ? true : false
+ 
 
     useEffect(() =>{
         axiosInstance.get(`/api/post/${id}`, {

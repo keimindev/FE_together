@@ -53,6 +53,7 @@ const MyPost = (props) => {
                             <Button width="60px;" margin="0 5px;" _onClick={() => history.push(`/write/${el.postId}`)} >수정</Button>
                             <Button width="60px;" _onClick={() => { 
                                 dispatch(postActions.del_MyPost(id, el.postId))
+                                window.location.reload()
                             }}>삭제</Button>
                         </Grid>
                     </Grid>

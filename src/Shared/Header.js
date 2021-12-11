@@ -35,15 +35,13 @@ const Header = () => {
                 <InnerBox>            
                     <Grid is_flex>
                         <Link to="/">
-                        <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
+                        <Logo><img src="/assets/logo1.png" alt="logo" /></Logo>
                         </Link>
                         <Grid is_flex width="150px;">
                             <Button margin="0 10px;" bg="#6adeb7;" _onClick={goTomypage}>
-                                {/* <AccountCircle className="icon" /> */}
                                 Mypage
                             </Button>
                             <Button bg="#007a59;" color="#ffffff;" _onClick={logout_}>
-                                {/* <ExitToApp className="icon"/> */}
                                 Logout
                             </Button>
                         </Grid>
@@ -59,7 +57,7 @@ const Header = () => {
             <InnerBox>            
                 <Grid is_flex>
                     <Link to="/">
-                    <Logo><img src="/assets/logo.png" alt="logo" /></Logo>
+                    <Logo><img src="/assets/logo1.png" alt="logo" /></Logo>
                     </Link>
                     <Grid is_flex width="200px;">
                         <Button margin="0 10px;" bg="#6adeb7;" _onClick={() => history.push('/login')}>Login</Button>

@@ -1,9 +1,10 @@
 # Together (mini project - 1)
+스터디 모임 서비스
 <br></br>
 
 ## 👋🏻 프로젝트 소개
 ##### 개발 공부를 하고 싶은 사람들의 모임! 혼자보단 함께! 함께 공부하고 싶은 사람들을 모으고 함께 공부하기 위한 스터디 모임 서비스 
-
+<br></br>
 
 ## Together Logo & Video 
 <p align="center">
